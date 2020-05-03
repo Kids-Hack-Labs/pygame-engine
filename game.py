@@ -2,23 +2,23 @@ import sys, pygame
 
 class Game:
   def __init__(self, size, title):
-    self.windowSize = size
-    self.gameTitle = title
+    self.window_size = size
+    self.game_title = title
 
     pygame.init()
     
-    pygame.display.set_mode(self.windowSize)
-    pygame.display.set_caption(self.gameTitle)
+    pygame.display.set_mode(self.window_size)
+    pygame.display.set_caption(self.game_title)
 
     self.screens = []
 
-    self.isRunning = True
+    self.is_running = True
     
   def run(self):
-    while self.isRunning:
+    while self.is_running:
       for evt in pygame.event.get():
         if evt == pygame.QUIT:
-          self.isRunning = False
+          self.is_running = False
           self.cleanup()
           pygame.quit()
           sys.exit()

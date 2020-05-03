@@ -1,9 +1,9 @@
 from game import Game
 
 def main():
-  windowSize = (800, 450)
+  window_size = (800, 450)
   title = "Game"
-  g = Game(windowSize, title)
+  g = Game(window_size, title)
   g.run()
 
 if __name__ == "__main__":

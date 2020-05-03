@@ -1,0 +1,5 @@
+File names must be in all lowercase, with a .py extension
+names containing "python" or "pygame" are not allowed
+class names must be PascalCased
+method and attribute names must follow PEP 8
+	(all lowercase, separated by understcores)
