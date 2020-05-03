@@ -5,7 +5,9 @@
   is a Transform.
   It expects behaviours to contain a flag to determine whether
   they are active or not.
-  Overall, the code is designed to be behaviour-agnostic
+  Overall, the code is designed to be behaviour-agnostic, but
+  expects behaviours to have certain attributes, namely:
+  is_active, game_object, (might include others in the future)
 
   OBS: because this is Python, name and is_active are public
 '''
@@ -24,12 +26,12 @@ class GameObject:
 
   #Common functionality
   def update(self):
-    for behaviour in behaviours:
+    for behaviour in self.behaviours:
       if behaviour.is_active:
         behaviour.update()
 
   def render(self):
-    for behaviour in behaviours:
+    for behaviour in self.behaviours:
       if behaviour.is_active:
         behaviour.update()
 
@@ -49,7 +51,7 @@ class GameObject:
 
   #expects an empty object of target type for checking
   def get_behaviour(self, target_behaviour):
-    for behaviour in behaviours:
+    for behaviour in self.behaviours:
       if type(behaviour) == type(target_behaviour):
         return behaviour
     return None #will require checks in other scripts
