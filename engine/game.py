@@ -28,5 +28,6 @@ class Game:
                     self.cleanup()
                     pygame.quit()
                     sys.exit()
+    
     def cleanup(self):
         pass

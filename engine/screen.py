@@ -11,6 +11,8 @@
 
 import pygame
 
+from game_object import GameObject
+
 class Screen:
 
     def __init__(_game_objects = []):
