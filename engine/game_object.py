@@ -1,58 +1,63 @@
 '''
-    Game Object base class
-    Defines a basic Game Object structure for adding behaviours
-    Because of its architecture, it assumes its first behaviour
-    is always a Transform.
-    It expects behaviours to contain a flag to determine
-    whether they are active or not.
-    Overall, the code is designed to be behaviour-agnostic, but
-    expects behaviours to have certain attributes, namely:
-    is_active, game_object,
-    (and might include others in the future)
-
-    OBS: because this is Python, name and is_active are public
+    ***Game class file***
+    Authored by HErC
+    Pygame "engine"
+    Designed to test different effects
+    The class follows a "behaviour-then-children"
+    architecture. The reason is pretty much
+    straightforward: any behaviour that alters
+    the parent should be reflected in the children
 '''
-import pygame
-#import behaviour
-#from transformBehaviour import Transform
-
+from engine.transform import Transform
 class GameObject:
-    def __init__(self, _x = 0, _y = 0, _name = "",active = True):
-        self.is_active = active
-        self.name = _name
-        self.behaviours = []
-        #self.add_behaviour(Transform(_x, _y))
+    def __init__(self):
+        self.name = ""
+        self.is_active = True
+        self.children = {}
+        self.behaviours = {}
 
-        #other initialization code goes here
-
-    #Common functionality
+        #all game objects should have a transform
+        #used the GameObject's own add_behaviour
+        #functionality, to ensure consistency
+        self.add_behaviour(Transform())
+        
     def update(self):
-        for behaviour in self.behaviours:
-            if behaviour.is_active:
-                behaviour.update()
+        #Opted for a behaviour-then-child architecture
+        for behaviour_name in self.behaviours.keys():
+            if self.behaviours[behaviour_name].is_active:
+                self.behaviours[behaviour_name].update()
+        for child_name in self.children.keys():
+            if self.children[child_name].is_active:
+                self.children[child_name].update()
 
     def render(self):
-        for behaviour in self.behaviours:
-            if behaviour.is_active:
-                behaviour.update()
+        for behaviour_name in self.behaviours.keys():
+            if self.behaviours[behaviour_name].is_active:
+                self.behaviours[behaviour_name].render()
+        for child_name in self.children.keys():
+            if self.children[child_name].is_active:
+                self.children[child_name].render()
 
-    #Specific functionality
+    #Behaviour management functionality
     def add_behaviour(self, behaviour):
-        if behaviour not in self.behaviours:
+        if (behaviour.name not in self.behaviours.keys()
+            and behaviour.game_object == None):
             behaviour.game_object = self
-            self.behaviours.append(behaviour)
+            self.behaviours[behaviour.name] = behaviour
 
     def remove_behaviour(self, behaviour):
-        if behaviour in self.behaviours:
-            self.behaviours.remove(behaviour)
-      
-    def get_transform(self):
-        #OBS: always expects Transform as first behaviour always
-        return self.behaviours[0]
+        if behaviour.name in self.behaviours.keys():
+            self.behaviours[behaviour.name].game_object = None
+            self.behaviours.pop(behaviour.name)
 
-      #expects an empty object of target type for checking
-    def get_behaviour(self, target_behaviour):
-        for behaviour in self.behaviours:
-            if type(behaviour) == type(target_behaviour):
-                return behaviour
-        return None #will require checks in other scripts
+    def get_behaviour(self, behaviour_name):
+        if behaviour_name in self.behaviours.keys():
+            return self.behaviours[behaviour_name]
+        return None
+
+    #Child management functionality
+    def add_child(self, child):
+        if (child.name not in self.children.keys()
+             and child.parent != null):
+            child.parent = self
+            self.children[child.name] = child

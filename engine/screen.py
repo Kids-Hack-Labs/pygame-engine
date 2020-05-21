@@ -1,57 +1,41 @@
 '''
-
-    Screen class stores data about gameobjects on that screen.
-    It worries about updating and rendering those objects.
-
-    A "Game" instance typically includes more than one screen object.
-
-    OBS: is_active should not be public... python :/
-
+    ***Base Screen class file***
+    Pygame "engine"
+    Designed to test different effects
 '''
-
 import pygame
-
-from game_object import GameObject
+#other imports go here
 
 class Screen:
-
-    def __init__(_game_objects = []):
+    def __init__(self):
+        self.bg_colour = None
+        self.image = None
+        self.game_objects = {}
+        self.started = False
         
-        self.is_active = False
-        self.game_objects = game_objects
-    
-    '''
-
-    def get_active():
-        return self.is_active
-
-    def set_active(status):
-        self.is_active = status
-
-    '''
-
-    # i suggest that we call this function if the game object has a render behaviour
-
-    # if expects a render behaviour
-    def render(self, render_behaviour = None):
-        if not render_behaviour:
-            print('No renderer on this GameObject!')
+    def start(self):
+        if not self.started:
+            self.started = True
             return
-
-        # call something like this
-        # pygame.draw_sprite(render_behaviour.sprite)
+        pass
 
     def update(self):
+        #may have custom functionality in children
+        for key in self.game_objects.keys():
+            if self.game_objects[key].is_active:
+                self.game_objects[key].update()
 
-        # assuming here that the screen.update will only be called if
-        # it is the currently active scene
-        
-        for game_object in self.game_objects:
-            # could be changed to get_active()
-            if game_object.is_active:
-                game_object.update()
+    def render(self):
+        #may have custom functionality in children
+        surf = pygame.display.get_surface()
+        for key in self.game_objects.keys():
+            if self.game_objects[key].is_active:
+                self.game_objects[key].render()
 
-                # self.render(game_object.renderer())
+    def add_game_object(self, game_object):
+        if game_object.name not in self.game_objects.keys():
+            self.game_objects[game_object.name] = game_object
 
-        # currently the gameobject render function is an update duplicate!
-                
+    def remove_game_object(self, game_object):
+        if game_object.name in self.game_objects.keys():
+            self.game_objects.pop(game_object.name)
