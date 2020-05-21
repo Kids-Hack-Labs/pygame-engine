@@ -17,7 +17,6 @@ class Screen:
         if not self.started:
             self.started = True
             return
-        pass
 
     def update(self):
         #may have custom functionality in children
