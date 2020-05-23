@@ -26,7 +26,7 @@ class Screen:
 
     def render(self):
         #may have custom functionality in children
-        surf = pygame.display.get_surface()
+        #surf = pygame.display.get_surface()
         for key in self.game_objects.keys():
             if self.game_objects[key].is_active:
                 self.game_objects[key].render()

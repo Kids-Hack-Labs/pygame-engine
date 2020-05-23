@@ -6,16 +6,16 @@
 import sys, pygame
 
 #Other imports go here
-from test_screen import TestScreen
+from src.test_screen import TestScreen
 
 class Game:
     class __Game:
         current_screen = None #static variable
         
-        def __init__(self, _width, _height, _title):
+        def __init__(self, _size, _title):
             pygame.init()
 
-            self.window_size = _width, _height
+            self.window_size = _size
             self.caption = _title
             
             pygame.display.set_mode(self.window_size)
@@ -26,7 +26,8 @@ class Game:
         def run(self):
             while self.is_running:
                 #start is passed after the first time
-                Game.__Game.current_screen.start()
+                if not Game.__Game.current_screen.started:
+                    Game.__Game.current_screen.start()
                 self.process_events()
                 self.update()
                 self.render()
@@ -55,10 +56,9 @@ class Game:
 
     instance = None #Game's point of access
 
-    def __init__(self, _width, _height, _title):
+    def __init__(self, _size, _title):
         if not Game.instance:
-            Game.instance = Game.__Game(_width,
-                                        _height,
+            Game.instance = Game.__Game(_size,
                                         _title)
         else:
             pass
