@@ -20,6 +20,7 @@ class Game:
             self.is_started = False
             self.is_running = False
             self.time_since_started = 0
+            self.delta_time = 0
             pygame.init()
 
             self.game_clock = pygame.time.Clock()
@@ -47,7 +48,7 @@ class Game:
                 self.update()
                 self.render()
                 #simplified timer/framerate implementation
-                self.game_clock.tick(_FPS)
+                self.delta_time = self.game_clock.tick(_FPS)
                 self.time_since_started = pygame.time.get_ticks()
             self.cleanup()
 
@@ -66,6 +67,9 @@ class Game:
         def cleanup(self):
             pygame.quit()
             sys.exit()
+
+        def get_delta_time(self):
+            return self.delta_time
 
         @staticmethod
         def set_screen(_screen):

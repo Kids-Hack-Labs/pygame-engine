@@ -23,7 +23,7 @@ class GameObject:
         
     def update(self):
         #Opted for a behaviour-then-child architecture
-        for behaviour_name in self.behaviours.keys():
+        for behaviour_name in list(self.behaviours.keys()):
             if self.behaviours[behaviour_name].is_active:
                 self.behaviours[behaviour_name].update()
         for child_name in self.children.keys():
@@ -31,7 +31,7 @@ class GameObject:
                 self.children[child_name].update()
 
     def render(self):
-        for behaviour_name in self.behaviours.keys():
+        for behaviour_name in list(self.behaviours.keys()):
             if self.behaviours[behaviour_name].is_active:
                 self.behaviours[behaviour_name].render()
         for child_name in self.children.keys():
@@ -40,13 +40,13 @@ class GameObject:
 
     #Behaviour management functionality
     def add_behaviour(self, behaviour):
-        if (behaviour.name not in self.behaviours.keys()
+        if (behaviour.name not in list(self.behaviours.keys())
             and behaviour.game_object == None):
             behaviour.game_object = self
             self.behaviours[behaviour.name] = behaviour
 
     def remove_behaviour(self, behaviour):
-        if behaviour.name in self.behaviours.keys():
+        if behaviour.name in list(self.behaviours.keys()):
             self.behaviours[behaviour.name].game_object = None
             self.behaviours.pop(behaviour.name)
 
