@@ -11,6 +11,7 @@ class Transform(Behaviour):
     def __init__(self):
         super().__init__()
         self.name = "Transform"
+        self.parent = None
         self.position = Vector2()
         self.rotation = 0
         self.scale = Vector2(1,1)

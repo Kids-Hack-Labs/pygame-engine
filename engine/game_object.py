@@ -12,6 +12,7 @@ from engine.transform import Transform
 class GameObject:
     def __init__(self):
         self.name = ""
+        self.parent = None
         self.is_active = True
         self.children = {}
         self.behaviours = {}
@@ -22,6 +23,16 @@ class GameObject:
         self.add_behaviour(Transform())
         
     def update(self):
+        '''
+        #This may be moved into the Transform...
+        if self.parent != None: #assumes parent is a game object
+            t = self.parent.get_behaviour("Transform")
+            self.get_behaviour("Transform").position.x += t.position.x
+            self.get_behaviour("Transform").position.y += t.position.y
+            self.get_behaviour("Transform").rotation += t.rotation
+            self.get_behaviour("Transform").scale.x += t.scale.x
+            self.get_behaviour("Transform").scale.y += t.scale.y
+        '''
         #Opted for a behaviour-then-child architecture
         for behaviour_name in list(self.behaviours.keys()):
             if self.behaviours[behaviour_name].is_active:
@@ -61,3 +72,9 @@ class GameObject:
              and child.parent != null):
             child.parent = self
             self.children[child.name] = child
+
+    #"This is to prevent multiple "import Game" statements
+    @staticmethod
+    def add_to_screen(game_obj):
+        from engine.game_env import Game
+        Game.instance.current_screen.add_game_object(game_obj)

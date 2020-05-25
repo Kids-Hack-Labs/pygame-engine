@@ -20,7 +20,9 @@ class TestScreen(Screen):
     def start(self):
         self.image = pygame.image.load("assets/Images/Space.jpg")
         test_go = GameObject()
-        test_go.name = "test"
+        test_go.name = "Ship"
+        test_go.get_behaviour("Transform").position.x = 512
+        test_go.get_behaviour("Transform").position.y = 388
         test_go.add_behaviour(ShipRenderer())
         test_go.add_behaviour(ShieldRenderer())
         test_go.add_behaviour(Movement())

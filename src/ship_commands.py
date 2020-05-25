@@ -12,7 +12,7 @@ class ShipCommands(Behaviour):
     def __init__(self):
         super().__init__()
         self.name = "ShipCommands"
-        self.cooldown = 1000 #milliseconds
+        self.cooldown = 250 #milliseconds
         self.has_shot = False
         self.last_shot = 0
         self.bullet_counter = 0
@@ -49,7 +49,6 @@ class ShipCommands(Behaviour):
     def shoot(self):
         self.has_shot = True
 
-        from engine.game_env import Game
         from engine.game_object import GameObject
         
         bullet = GameObject()
@@ -60,5 +59,5 @@ class ShipCommands(Behaviour):
         bullet.add_behaviour(BulletMovement())
         bullet.add_behaviour(BulletRenderer())
         
-        Game.instance.current_screen.add_game_object(bullet)
+        GameObject.add_to_screen(bullet)
         self.bullet_counter += 1
