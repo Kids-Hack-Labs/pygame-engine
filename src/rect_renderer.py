@@ -17,7 +17,7 @@ class RectRenderer(Behaviour):
     def render(self):
         surf = pygame.display.get_surface()
         t = self.game_object.get_behaviour("Transform")
-        self.rect.x = t.position.x
-        self.rect.y = t.position.y
+        self.rect.center = (t.position[0], t.position[1])
 
-        pygame.draw.rect(surf, self.colour, self.rect, 5)
+        if (self.rect.width > 0 < self.rect.height):
+            pygame.draw.rect(surf, self.colour, self.rect, 5)

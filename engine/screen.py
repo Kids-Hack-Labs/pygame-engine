@@ -4,6 +4,7 @@
     Designed to test different effects
 '''
 import pygame
+from engine.game_object import GameObject
 #other imports go here
 
 class Screen:
@@ -32,7 +33,8 @@ class Screen:
                 self.game_objects[key].render()
 
     def add_game_object(self, game_object):
-        if game_object.name not in list(self.game_objects.keys()):
+        if (isinstance(game_object, GameObject)
+            and game_object.name not in list(self.game_objects.keys())):
             self.game_objects[game_object.name] = game_object
 
     def remove_game_object(self, game_object):

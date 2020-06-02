@@ -32,3 +32,16 @@ class Transform(Behaviour):
             return #safety measure
     def rotate(self, _rotation):
         self.rotation += _rotation
+    def rescale(self, _scale):
+        if isinstance(_scale, (float, int)):
+            self.scale.x *= _scale
+            self.scale.y *= _scale
+            return
+        if isinstance(_scale, Vector2):
+            self.scale.x *= _scale.x
+            self.scale.y *= _scale.y
+            return
+        if isinstance(_scale, (list, tuple)):
+            self.scale.x *= _scale[0]
+            self.scale.y *= _scale[1]
+            return

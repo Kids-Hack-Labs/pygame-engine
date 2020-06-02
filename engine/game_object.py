@@ -8,6 +8,7 @@
     straightforward: any behaviour that alters
     the parent should be reflected in the children
 '''
+from engine.behaviour import Behaviour
 from engine.transform import Transform
 class GameObject:
     def __init__(self):
@@ -51,7 +52,8 @@ class GameObject:
 
     #Behaviour management functionality
     def add_behaviour(self, behaviour):
-        if (behaviour.name not in list(self.behaviours.keys())
+        if (isinstance(behaviour, Behaviour) and
+            behaviour.name not in list(self.behaviours.keys())
             and behaviour.game_object == None):
             behaviour.game_object = self
             self.behaviours[behaviour.name] = behaviour
@@ -68,8 +70,9 @@ class GameObject:
 
     #Child management functionality
     def add_child(self, child):
-        if (child.name not in self.children.keys()
-             and child.parent != null):
+        if (isinstance(child, GameObject) and
+            child.name not in self.children.keys()
+            and child.parent != null):
             child.parent = self
             self.children[child.name] = child
 
