@@ -71,7 +71,32 @@ class BoxCollider(Behaviour):
     #WIP
     #prevent_overlap forces the current box away from the other
     def prevent_overlap(self, other):
-        if (isintance(other, BoxCollider) and
+        if (isinstance(other, BoxCollider) and
             self.box.colliderect(other.box)):
+            o = other.game_object.get_behaviour("Transform")
             r = self.box.clip(other.box)
             t = self.game_object.get_behaviour("Transform")
+            
+            ###################################################
+            #Solution: Check for the smallest axis overlap and#
+            #displace the invoking object's collider box back #
+            #along it.                                        #
+            #Obs.: This prevents overlap, but still causes a  #
+            #small penetration depth due to the ship's speed. #
+            #More elaborate calculations will probably be     #
+            #needed, but the current approach should suffice  #
+            #for the intended objective.                      #
+            ###################################################
+
+            if (r.width < r.height):
+                #if the other is to the right, push back to the left
+                if (o.position.x >= t.position.x):
+                    t.position.x -= (r.width +1)
+                else:
+                    t.position.x += (r.width +1)
+            else:
+                #if the other is below, push it up
+                if (o.position.x >= t.position.y):
+                    t.position.y -= (r.height +1)
+                else:
+                    t.position.y += (r.height +1)

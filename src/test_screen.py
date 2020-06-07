@@ -55,6 +55,7 @@ class TestScreen(Screen):
         
     def update(self):
         super().update()
+        self.game_objects["Ship"].get_behaviour("BoxCollider").prevent_overlap(self.game_objects["Obstacle"].get_behaviour("BoxCollider"))
         r = self.game_objects["Ship"].get_behaviour("BoxCollider").box.clip(self.game_objects["Obstacle"].get_behaviour("BoxCollider").box)
         self.game_objects["Overlap"].get_behaviour("BoxCollider").box = r
         self.game_objects["Overlap"].get_behaviour("Transform").position = r.center
