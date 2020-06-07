@@ -32,6 +32,8 @@ class Behaviour:
         self.name = ""
         self.game_object = None
         self.is_active = True
+    def start(self):
+        pass
     def update(self):
         pass
     def render(self):

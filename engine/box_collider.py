@@ -48,6 +48,8 @@ class BoxCollider(Behaviour):
         self.extent = Vector2(0,0)
         self.box = Rect(0,0,0,0)
         self.is_debug = False
+    def start(self):
+        super().start()
     def update(self):
         super().update()
         t = self.game_object.get_behaviour("Transform")

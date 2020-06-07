@@ -43,7 +43,10 @@ class Transform(Behaviour):
         self.position = Vector2(0,0)
         self.rotation = 0
         self.scale = Vector2(1,1)
+    def start(self):
+        super().start()
     def update(self):
+        super().update()
         '''
         #assumes parent is a Transform
         if self.parent != None: 
@@ -53,9 +56,8 @@ class Transform(Behaviour):
             self.get_behaviour("Transform").scale.x += self.parent.scale.x
             self.get_behaviour("Transform").scale.y += self.parent.scale.y
         '''
-        pass
     def render(self):
-        pass
+        super().render()
 
     #Transform specific functionality:
     #translate() checks the incoming data type and
