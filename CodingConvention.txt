@@ -3,3 +3,6 @@ names containing "python" or "pygame" are not allowed
 class names must be PascalCased
 method and attribute names must follow PEP 8
 	(all lowercase, separated by understcores)
+Inherited methods should always be reflected in children, 
+even if the children's methods merely invoke their parents
+via super(). This enforces consistency throughout the code
