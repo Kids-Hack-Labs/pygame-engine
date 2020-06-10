@@ -74,11 +74,17 @@ class Game:
                 self.time_since_started = pygame.time.get_ticks()
             self.cleanup()
 
+        # called when the game recieves a mouse click
+        def handle_mouse(self):
+            self.current_screen.on_mouse_click(pygame.mouse.get_pos())
+
         def process_events(self):
             #Other event processing may go here, if needed
             for evt in pygame.event.get():
                 if evt.type == pygame.QUIT:
                     self.is_running = False
+                if evt.type == pygame.MOUSEBUTTONDOWN:
+                    self.handle_mouse()
 
         def update(self):
             Game.__Game.current_screen.update()

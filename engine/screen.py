@@ -65,3 +65,6 @@ class Screen:
     def remove_game_object(self, game_object):
         if game_object.name in list(self.game_objects.keys()):
             self.game_objects.pop(game_object.name)
+
+    def on_mouse_click(self, pos):
+        print(pos)

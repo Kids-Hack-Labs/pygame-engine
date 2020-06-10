@@ -74,3 +74,6 @@ class TestScreen(Screen):
         
     def remove_game_object(self, game_object):
         super().remove_game_object(game_object)
+
+    def on_mouse_click(self, pos):
+        super().on_mouse_click(pos)
