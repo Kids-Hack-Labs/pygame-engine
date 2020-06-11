@@ -2,7 +2,7 @@
     ***Box Collider class file***
     KHL Engine
     Created       Jun 01, 2020
-    Last Modified Jun 06, 2020
+    Last Modified Jun 10, 2020
 
     Remarks:
     -> This class implements an AABB

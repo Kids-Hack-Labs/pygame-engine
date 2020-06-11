@@ -6,3 +6,5 @@ method and attribute names must follow PEP 8
 Inherited methods should always be reflected in children, 
 even if the children's methods merely invoke their parents
 via super(). This enforces consistency throughout the code
+Recommendation: boolean names should start with the prefix
+"is_". This helps improve code readability

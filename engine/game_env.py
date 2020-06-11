@@ -2,13 +2,15 @@
     ***Game class file***
     KHL Engine
     Created       May 03, 2020
-    Last Modified Jun 04, 2020
+    Last Modified Jun 11, 2020
 
     Remarks:
     -> Implemented as a singleton
     -> Manages Window instantiation, the Game Loop
        (event processing, update, render),
        and performs cleanup functions on exit
+    -> Starts screens when they're assigned as
+       the current screen.
 '''
 #basic imports
 import sys, pygame
@@ -46,10 +48,10 @@ class Game:
             pygame.display.set_caption(self.caption)
 
             #A single screen can be loaded at a time
-            #as a static variable. Screen are started
-            #right after assignment
-            Game.__Game.current_screen = TestScreen()
-            Game.__Game.current_screen.start()
+            #as a static variable. The static method
+            #set_screen is used to enforce consistency
+            #and prevent duplicate code
+            Game.__Game.set_screen(TestScreen())
 
             self.time_since_started = pygame.time.get_ticks()
 
@@ -66,7 +68,7 @@ class Game:
             #Here is where the game loop "proper" begins
             while self.is_running:
                 #start is passed after the first time
-                if not Game.__Game.current_screen.started:
+                if not Game.__Game.current_screen.is_started:
                     Game.__Game.current_screen.start()
                 self.process_events()
                 self.update()
@@ -101,7 +103,8 @@ class Game:
         @staticmethod
         def set_screen(_screen):
             Game.__Game.current_screen = _screen
-            Game.__Game.current_screen.start()
+            if not Game.__Game.current_screen.is_started:
+                Game.__Game.current_screen.start()
 
     #Game's point of access
     instance = None 

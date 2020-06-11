@@ -2,7 +2,7 @@
     ***Game Object class file***
     KHL Engine
     Created       May 04, 2020
-    Last Modified Jun 06, 2020
+    Last Modified Jun 11, 2020
 
     Remarks:
     -> This class is based on Game Objects/Actors
@@ -18,6 +18,8 @@
        architecture. The reason is pretty much
        straightforward: any behaviour that alters
        the parent should be reflected in the children
+    -> Game Objects now have an is_started variable, to
+       account for the start() method calls
     -> Similar to the "Screen" issue with dictionaries,
        casting to a list is necessary before iteration
     -> Parent-child functionality not fully implemented,
@@ -36,6 +38,7 @@ class GameObject:
         #Each game object should have a unique name
         self.name = ""
         self.parent = None
+        self.is_started = False
         self.is_active = True
         
         #Following other engines' architectures, Game
@@ -50,10 +53,17 @@ class GameObject:
         self.add_behaviour(Transform())
 
     def start(self):
-        for behaviour_name in list(self.behaviours.keys()):
-            self.behaviours[behaviour_name].start()
-        for child_name in list(self.children.keys()):
-            self.children[child_name].start()
+        if not self.is_started:
+            #calls start() on all "unstarted" behaviours and
+            #children. As per the current architecture, it may
+            #seem redundant, but it is more of a security check.
+            for behaviour_name in list(self.behaviours.keys()):
+                if not self.behaviours[behaviour_name].is_started:
+                    self.behaviours[behaviour_name].start()
+            for child_name in list(self.children.keys()):
+                if not self.children[child_name].is_started:
+                    self.children[child_name].start()
+            self.is_started = True
         
     def update(self):
         #Opted for a behaviour-then-child architecture
@@ -82,7 +92,8 @@ class GameObject:
             and behaviour.game_object == None):
             behaviour.game_object = self
             self.behaviours[behaviour.name] = behaviour
-            self.behaviours[behaviour.name].start()
+            if not self.behaviours[behaviour.name].is_started:
+                self.behaviours[behaviour.name].start()
 
     def remove_behaviour(self, behaviour):
         if behaviour.name in list(self.behaviours.keys()):
@@ -106,6 +117,8 @@ class GameObject:
             and child.parent != null):
             child.parent = self
             self.children[child.name] = child
+            if not self.children[child.name].is_started:
+                self.children[child.name].start()
 
     #"This is to prevent multiple "import Game" statements
     @staticmethod

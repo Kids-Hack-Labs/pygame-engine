@@ -2,7 +2,7 @@
     ***Behaviour base class file***
     KHL Engine
     Created       May 04, 2020
-    Last Modified Jun 06, 2020
+    Last Modified Jun 11, 2020
 
     Remarks:
     -> A Behaviour is simply an empty
@@ -21,6 +21,12 @@
        are empty functions, which expect
        implementation in derived
        behaviours
+    -> The only function that actually has
+       functionality is start(). This sets
+       the is_started variable to true,
+       other classes should check whether
+       the behaviour is started before
+       calling this method in children
     -> This class vaguely mirrors Unity's
        "MonoBehaviour" architecture, and
        was actually designed with that
@@ -31,9 +37,10 @@ class Behaviour:
     def __init__(self):
         self.name = ""
         self.game_object = None
+        self.is_started = False
         self.is_active = True
     def start(self):
-        pass
+        self.is_started = True
     def update(self):
         pass
     def render(self):

@@ -2,7 +2,7 @@
     ***Transform class file***
     KHL Engine
     Created       May 07, 2020
-    Last Modified Jun 06, 2020
+    Last Modified Jun 10, 2020
 
     Remarks:
     -> Transform is a "basic behaviour",
@@ -49,12 +49,13 @@ class Transform(Behaviour):
         super().update()
         '''
         #assumes parent is a Transform
-        if self.parent != None: 
-            self.get_behaviour("Transform").position.x += self.parent.position.x
-            self.get_behaviour("Transform").position.y += self.parent.position.y
-            self.get_behaviour("Transform").rotation += self.parent.rotation
-            self.get_behaviour("Transform").scale.x += self.parent.scale.x
-            self.get_behaviour("Transform").scale.y += self.parent.scale.y
+        if self.parent != None:
+            transf = self.game_object.get_behaviour("Transform")
+            transf.position.x += self.parent.position.x
+            transf.position.y += self.parent.position.y
+            transf.rotation += self.parent.rotation
+            transf.scale.x += self.parent.scale.x
+            transf.scale.y += self.parent.scale.y
         '''
     def render(self):
         super().render()
