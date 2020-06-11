@@ -46,8 +46,10 @@ class Game:
             pygame.display.set_caption(self.caption)
 
             #A single screen can be loaded at a time
-            #as a static variable.
+            #as a static variable. Screen are started
+            #right after assignment
             Game.__Game.current_screen = TestScreen()
+            Game.__Game.current_screen.start()
 
             self.time_since_started = pygame.time.get_ticks()
 
@@ -95,9 +97,11 @@ class Game:
             return self.delta_time
 
         #This allows for screen change
+        #Also starts screens right after assignment
         @staticmethod
         def set_screen(_screen):
             Game.__Game.current_screen = _screen
+            Game.__Game.current_screen.start()
 
     #Game's point of access
     instance = None 

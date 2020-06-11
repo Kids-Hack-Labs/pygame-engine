@@ -33,6 +33,13 @@ class Screen:
         #This base class function must be called
         #at the end of each and every derived
         #screen start() implementation
+
+        #This will start all Behaviours, regardless
+        #of their being active or not
+        for key in list(self.game_objects.keys()):
+            self.game_objects[key].start()
+            
+        #Start part
         if not self.started:
             self.started = True
             return
@@ -57,10 +64,12 @@ class Screen:
     #error-checking were implemented, specifically
     #to prevent the duplicate insertion and override
     #of existing items
+    #Starts Game Object behaviours when added
     def add_game_object(self, game_object):
         if (isinstance(game_object, GameObject)
             and game_object.name not in list(self.game_objects.keys())):
             self.game_objects[game_object.name] = game_object
+            self.game_objects[game_object.name].start()
 
     def remove_game_object(self, game_object):
         if game_object.name in list(self.game_objects.keys()):

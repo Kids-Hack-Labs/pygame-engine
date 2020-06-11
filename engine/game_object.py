@@ -48,6 +48,12 @@ class GameObject:
         #used the GameObject's own add_behaviour
         #functionality, to ensure consistency
         self.add_behaviour(Transform())
+
+    def start(self):
+        for behaviour_name in list(self.behaviours.keys()):
+            self.behaviours[behaviour_name].start()
+        for child_name in list(self.children.keys()):
+            self.children[child_name].start()
         
     def update(self):
         #Opted for a behaviour-then-child architecture
@@ -76,6 +82,7 @@ class GameObject:
             and behaviour.game_object == None):
             behaviour.game_object = self
             self.behaviours[behaviour.name] = behaviour
+            self.behaviours[behaviour.name].start()
 
     def remove_behaviour(self, behaviour):
         if behaviour.name in list(self.behaviours.keys()):
