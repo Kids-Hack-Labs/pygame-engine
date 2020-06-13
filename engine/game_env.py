@@ -18,6 +18,7 @@ import sys, pygame
 _FPS = 30
 
 #Other imports go here
+from engine.screen import Screen
 from src.test_screen import TestScreen
 
 class Game:
@@ -102,9 +103,10 @@ class Game:
         #Also starts screens right after assignment
         @staticmethod
         def set_screen(_screen):
-            Game.__Game.current_screen = _screen
-            if not Game.__Game.current_screen.is_started:
-                Game.__Game.current_screen.start()
+            if isinstance(_screen, Screen):
+                Game.__Game.current_screen = _screen
+                if not Game.__Game.current_screen.is_started:
+                    Game.__Game.current_screen.start()
 
     #Game's point of access
     instance = None 

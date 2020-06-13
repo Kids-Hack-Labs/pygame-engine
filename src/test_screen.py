@@ -13,14 +13,16 @@ from src.ship_renderer import ShipRenderer
 from src.movement import Movement
 from src.shield_renderer import ShieldRenderer
 from src.ship_commands import ShipCommands
-
+#Convenience imports
+from pygame.math import Vector2
+from pygame import Rect
 
 class TestScreen(Screen):
     def __init__(self):
         super().__init__()
 
     def start(self):
-        self.image = pygame.image.load("assets/Images/Space.jpg")
+        self.image = pygame.image.load("assets/images/space.jpg")
         test_go = GameObject()
         test_go.name = "Ship"
         test_go.get_behaviour("Transform").position.x = 512
@@ -40,26 +42,26 @@ class TestScreen(Screen):
         another_go.get_behaviour("Transform").position.y = 200
         another_go.add_behaviour(BoxCollider())
         another_go.get_behaviour("BoxCollider").is_debug = True
-        another_go.get_behaviour("BoxCollider").extent = pygame.math.Vector2(350)
+        another_go.get_behaviour("BoxCollider").extent = Vector2(350)
         self.add_game_object(another_go)
 
         overlap_go = GameObject()
         overlap_go.name = "Overlap"
-        overlap_go.add_behaviour(BoxCollider())
         overlap_go.add_behaviour(RectRenderer())
         overlap_go.get_behaviour("RectRenderer").colour = (255, 0, 0)
-        overlap_go.get_behaviour("RectRenderer").rect.width = 0
-        overlap_go.get_behaviour("RectRenderer").rect.height = 0
+        overlap_go.get_behaviour("RectRenderer").rect = Rect(0, 0, 0, 0)
         self.add_game_object(overlap_go)
         super().start()
         
     def update(self):
         super().update()
-        self.game_objects["Ship"].get_behaviour("BoxCollider").prevent_overlap(self.game_objects["Obstacle"].get_behaviour("BoxCollider"))
-        r = self.game_objects["Ship"].get_behaviour("BoxCollider").box.clip(self.game_objects["Obstacle"].get_behaviour("BoxCollider").box)
-        self.game_objects["Overlap"].get_behaviour("BoxCollider").box = r
-        self.game_objects["Overlap"].get_behaviour("Transform").position = r.center
-        self.game_objects["Overlap"].get_behaviour("RectRenderer").rect = self.game_objects["Overlap"].get_behaviour("BoxCollider").box
+        ship_col = self.game_objects["Ship"].get_behaviour("BoxCollider")
+        obstacle_col = self.game_objects["Obstacle"].get_behaviour("BoxCollider")
+        ship_col.prevent_overlap(obstacle_col)
+        result = ship_col.box.clip(obstacle_col.box)
+        overlap = self.game_objects["Overlap"]
+        overlap.get_behaviour("Transform").position = result.center
+        overlap.get_behaviour("RectRenderer").rect = result
         
     def render(self):
         surf = pygame.display.get_surface()
