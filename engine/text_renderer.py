@@ -13,7 +13,7 @@ class TextRenderer(Behaviour):
 
         self.do_antialias = True
 
-        generate_font()
+        self.generate_font()
         self.display = pygame.display.get_surface()
 
         self.transform = None
@@ -26,13 +26,12 @@ class TextRenderer(Behaviour):
 
     # need to update the font through this method since we don't want
     # to create a new font object every frame
-    def set_size(size):
+    def set_size(self, size):
         self.size = size
-        self.font_path = font_path
 
         self.generate_font()
 
-    def set_font(font_path):
+    def set_font(self, sfont_path):
         pass
         
     def update(self):

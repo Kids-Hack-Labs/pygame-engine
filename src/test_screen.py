@@ -55,7 +55,7 @@ class TestScreen(Screen):
 
         text = GameObject()
         text.add_behaviour(TextRenderer())
-        text.get_behaviour("TextRenderer").size = 300
+        text.get_behaviour("TextRenderer").set_size(30)
         self.add_game_object(text)
         
         super().start()
