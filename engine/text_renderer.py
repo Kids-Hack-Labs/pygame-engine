@@ -9,7 +9,7 @@ class TextRenderer(Behaviour):
         self.text = "Hello, World!"
         self.size = 12
         self.colour = (255, 255, 255)
-        self.font_path = "assets/fonts/Roboto-Medium.ttf"
+        self.font_path = "engine/engine_assets/Roboto-Medium.ttf"
 
         self.do_antialias = True
 
