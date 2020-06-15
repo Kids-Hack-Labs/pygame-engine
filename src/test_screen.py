@@ -7,6 +7,7 @@ import pygame
 from engine.screen import Screen
 from engine.game_object import GameObject
 from engine.box_collider import BoxCollider
+from engine.text_renderer import TextRenderer
 #Behaviour Imports
 from src.rect_renderer import RectRenderer
 from src.ship_renderer import ShipRenderer
@@ -51,6 +52,12 @@ class TestScreen(Screen):
         overlap_go.get_behaviour("RectRenderer").colour = (255, 0, 0)
         overlap_go.get_behaviour("RectRenderer").rect = Rect(0, 0, 0, 0)
         self.add_game_object(overlap_go)
+
+        text = GameObject()
+        text.add_behaviour(TextRenderer())
+        text.get_behaviour("TextRenderer").set_size(30)
+        self.add_game_object(text)
+        
         super().start()
         
     def update(self):
