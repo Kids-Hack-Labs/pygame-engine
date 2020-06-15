@@ -29,7 +29,7 @@ class TestScreen(Screen):
         test_go.get_behaviour("Transform").position.y = 388
         test_go.add_behaviour(BoxCollider())
         test_go.get_behaviour("BoxCollider").is_debug = False
-        test_go.get_behaviour("BoxCollider").extent = pygame.math.Vector2(150)
+        test_go.get_behaviour("BoxCollider").extent = Vector2(150)
         test_go.add_behaviour(ShipRenderer())
         test_go.add_behaviour(ShieldRenderer())
         test_go.add_behaviour(Movement())

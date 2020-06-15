@@ -15,6 +15,8 @@ class ShieldRenderer(Behaviour):
         self.radius = 100
         self.shield_is_on = False
         self.display_shield = False
+    def start(self):
+        super().start()
     def update(self):
         super().update()
     def render(self):

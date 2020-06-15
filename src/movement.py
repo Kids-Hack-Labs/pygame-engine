@@ -16,7 +16,8 @@ class Movement(Behaviour):
         self.forward_info = 0
         self.rotation_speed = 2
         self.rotation_info = 0
-        
+    def start(self):
+        super().start()
     def update(self):
         key_list = pygame.key.get_pressed()
 
@@ -73,5 +74,5 @@ class Movement(Behaviour):
         '''
         
         def render(self):
-            pass
+            super().render()
         

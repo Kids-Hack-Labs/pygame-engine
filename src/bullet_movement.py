@@ -9,7 +9,8 @@ class BulletMovement(Behaviour):
     def __init__(self):
         super().__init__()
         self.speed = 15
-
+    def start(self):
+        super().start()
     def update(self):
         super().update()
         t = self.game_object.get_behaviour("Transform")

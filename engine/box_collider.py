@@ -50,8 +50,16 @@ class BoxCollider(Behaviour):
         self.is_debug = False
     def start(self):
         super().start()
+        t = self.game_object.get_behaviour("Transform")
+        self.center = Vector2(t.position)
+        self.center.x += self.offset.x
+        self.center.y += self.offset.y
+        self.box.center = self.center
+        self.box.width = int(self.extent.x)
+        self.box.height = int(self.extent.y)
     def update(self):
         super().update()
+        #Code repeated to account for runtime collider changes
         t = self.game_object.get_behaviour("Transform")
         self.center = Vector2(t.position)
         self.center.x += self.offset.x

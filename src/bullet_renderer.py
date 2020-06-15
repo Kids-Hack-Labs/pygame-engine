@@ -12,6 +12,8 @@ class BulletRenderer(Behaviour):
         self.name = "BulletRenderer"
         self.colour = (255, 255, 0)
         self.radius = 5
+    def start(self):
+        super().start()
     def update(self):
         super().update()
     def render(self):

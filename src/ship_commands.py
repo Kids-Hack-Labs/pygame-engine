@@ -16,7 +16,8 @@ class ShipCommands(Behaviour):
         self.has_shot = False
         self.last_shot = 0
         self.bullet_counter = 0
-        
+    def start(self):
+        super().start()
     def update(self):
         super().update()
         key_list = pygame.key.get_pressed()

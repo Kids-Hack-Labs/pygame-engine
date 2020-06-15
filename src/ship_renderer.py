@@ -21,9 +21,10 @@ class ShipRenderer(Behaviour):
         self.fire_img = self.base_img.subsurface(self.fire_rect)
         
         self.display_fire = True
-
+    def start(self):
+        super().start()
     def update(self):
-        pass
+        super().update()
     def render(self):
         #gets game surface and object's transform
         surf = pygame.display.get_surface()

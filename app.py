@@ -10,7 +10,6 @@ def main():
     window_size = (1024, 768)
     title = "Game"
     g = Game(window_size, title)
-
     g.run()
 
 if __name__ == "__main__":
