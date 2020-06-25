@@ -5,6 +5,7 @@
 '''
 import pygame
 from engine.behaviour import Behaviour
+from engine.box_collider import BoxCollider
 from src.bullet_movement import BulletMovement
 from src.bullet_renderer import BulletRenderer
 
@@ -58,6 +59,9 @@ class ShipCommands(Behaviour):
         bullet.get_behaviour("Transform").position.y = self.game_object.get_behaviour("Transform").position.y
         bullet.get_behaviour("Transform").rotation = self.game_object.get_behaviour("Transform").rotation
         bullet.add_behaviour(BulletMovement())
+        bullet.add_behaviour(BoxCollider())
+        bullet.get_behaviour("BoxCollider").is_debug = True
+        bullet.get_behaviour("BoxCollider").extent = pygame.math.Vector2(10)
         bullet.add_behaviour(BulletRenderer())
         
         GameObject.add_to_screen(bullet)

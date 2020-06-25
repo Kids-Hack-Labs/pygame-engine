@@ -2,7 +2,7 @@
     ***Game Object class file***
     KHL Engine
     Created       May 04, 2020
-    Last Modified Jun 11, 2020
+    Last Modified Jun 20, 2020
 
     Remarks:
     -> This class is based on Game Objects/Actors
@@ -27,6 +27,11 @@
        kind of semantics
     -> Possible future add-on: Functionality of the type
        "GameObject.Instantiate(model)"
+    -> GameObjects now raise exceptions when trying to
+       add, get or remove invalid Behaviours
+    -> Added checker function has_behaviour() to let
+       users know whether a Game Object has a behaviour
+       or not
 '''
 #Basic imports
 #In general, Game Objects shouldn't know more than this
@@ -94,20 +99,47 @@ class GameObject:
             self.behaviours[behaviour.name] = behaviour
             if not self.behaviours[behaviour.name].is_started:
                 self.behaviours[behaviour.name].start()
+        else:
+            if (isinstance(behaviour, Behaviour) and
+                behaviour.name in list(self.behaviours.keys())):
+                raise ValueError(behaviour.name + "already added")
+            raise TypeError(str(type(behaviour))+
+                            " is not a valid Behaviour")
 
     def remove_behaviour(self, behaviour):
-        if behaviour.name in list(self.behaviours.keys()):
+        if (isinstance(behaviour, Behaviour) and
+            behaviour.name in list(self.behaviours.keys())):
             self.behaviours[behaviour.name].game_object = None
             self.behaviours.pop(behaviour.name)
+        elif (isinstance(behaviour, str) and
+              behaviour in list(self.behaviours.keys())):
+            self.behaviours[behaviour].game_object = None
+            self.behaviours.pop(behaviour)
+        else:
+            if (isinstance(behaviour, Behaviour)):
+                raise KeyError(behaviour.name + " not found in " + self.name)
 
     #Behaviour getter. First checks whether the behaviour
-    #exists in the current Game Object. Returns None as a
-    #safety measure.
+    #exists in the current Game Object. Throws an exception
+    #if it is not a valid behaviour
     def get_behaviour(self, behaviour_name):
-        if behaviour_name in list(self.behaviours.keys()):
+        if (isinstance(behaviour_name, str) and
+            behaviour_name in list(self.behaviours.keys())):
             return self.behaviours[behaviour_name]
-        return None
-
+        elif (isinstance(behaviour_name, Behaviour) and
+              behaviour_name.name in list(self.behaviours.keys())):
+            return self.behaviours[behaviour_name.name]
+        else:
+            raise TypeError(str(behaviour_name)+" not present")
+    #Suggestion by Mason
+    def has_behaviour(self, behaviour_name):
+        if (isinstance(behaviour_name, str) and
+            behaviour_name in list(self.behaviours.keys())):
+            return True
+        if (isinstance(behaviour_name, Behaviour) and
+            behaviour_name.name in list(self.behaviours.keys())):
+            return True
+        return False
     #Child management functionality
     #Implements the same type and duplicate-checking of
     #the behaviour dictionary

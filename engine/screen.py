@@ -2,7 +2,7 @@
     ***Screen base class file***
     KHL Engine
     Created       May 04, 2020
-    Last Modified Jun 11, 2020
+    Last Modified Jun 18, 2020
 
     Remarks:
     -> Base for all game screens, which will,
@@ -16,6 +16,8 @@
        game objects), keys are cast into a list
        before iteration.
     -> Expanded the start() method
+    -> Screens now raise exceptions when attempting
+       to add or retrieve invalid GameObjects
 '''
 import pygame
 from engine.game_object import GameObject
@@ -73,7 +75,22 @@ class Screen:
             self.game_objects[game_object.name] = game_object
             if not self.game_objects[game_object.name].is_started:
                 self.game_objects[game_object.name].start()
+        else:
+            raise TypeError(str(type(game_object)) + " is not a GameObject")
 
     def remove_game_object(self, game_object):
-        if game_object.name in list(self.game_objects.keys()):
+        if (isinstance(game_object, GameObject)
+            and game_object.name in list(self.game_objects.keys())):
             self.game_objects.pop(game_object.name)
+        elif(isinstance(game_object, str) and
+             game_object in list(self.game_objects.keys())):
+            self.game_objects.pop(game_object)
+        else:
+            if (isinstance(game_object, GameObject)):
+                raise KeyError(str(game_object.name) +
+                               " is not in registered with the Screen")
+            elif(isinstance(game_object, str)):
+                raise KeyError(game_object +
+                               " is not registered with the Screen")
+            else:
+                raise TypeError(str(type(game_object)) + " is an unknown object")

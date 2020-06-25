@@ -107,6 +107,8 @@ class Game:
                 Game.__Game.current_screen = _screen
                 if not Game.__Game.current_screen.is_started:
                     Game.__Game.current_screen.start()
+            else:
+                raise TypeError(type(_screen)+" is not a Screen")
 
     #Game's point of access
     instance = None 
