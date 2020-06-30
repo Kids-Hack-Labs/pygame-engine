@@ -39,5 +39,7 @@ class TextRenderer(Behaviour):
         
     def render(self):
         text_surface = self.font.render(self.text, self.do_antialias, self.colour)
-        self.display.blit(text_surface, self.transform.position)
+        center = (int(self.transform.position.x - (text_surface.get_rect().width/2)),
+                  int(self.transform.position.y - (text_surface.get_rect().height/2)))
+        self.display.blit(text_surface, center)
         

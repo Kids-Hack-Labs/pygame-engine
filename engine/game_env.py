@@ -19,7 +19,7 @@ _FPS = 30
 
 #Other imports go here
 from engine.screen import Screen
-from src.test_screen import TestScreen
+from src.intro_screen import IntroScreen
 
 class Game:
     #The "real" Game class is wrapped in a singleton
@@ -52,7 +52,7 @@ class Game:
             #as a static variable. The static method
             #set_screen is used to enforce consistency
             #and prevent duplicate code
-            Game.__Game.set_screen(TestScreen())
+            Game.__Game.set_screen(IntroScreen())
 
             self.time_since_started = pygame.time.get_ticks()
 
